@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-4 py-16 text-center">
-      <h1 className="mt-4 font-display text-5xl font-bold tracking-tight text-gray-900">
+      <h1 className="mt-4 font-display text-6xl text-gray-900">
         dahil gusto ka namin marinig
       </h1>
       <p className="mt-3 max-w-xl font-cursive text-3xl text-gray-800">

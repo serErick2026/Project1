@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Caveat, Fredoka, Geist, Geist_Mono } from "next/font/google";
+import { Caveat, Geist, Geist_Mono, Pacifico } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,9 +17,10 @@ const caveat = Caveat({
   subsets: ["latin"],
 });
 
-const fredoka = Fredoka({
+const pacifico = Pacifico({
   variable: "--font-display",
   subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -31,7 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} ${fredoka.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} ${pacifico.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
