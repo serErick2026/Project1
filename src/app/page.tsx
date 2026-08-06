@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-4 py-16 text-center">
-      <h1 className="mt-4 font-cursive text-6xl text-gray-900">
+      <h1 className="mt-4 font-cursive text-[4.125rem] text-moss-800">
         Tell us and we will act on it.
       </h1>
       <p
-        className="mt-3 max-w-xl text-sm italic text-gray-800"
+        className="mt-3 max-w-xl text-[28px] italic text-gray-800"
         style={{ fontFamily: "'Times New Roman', Times, serif" }}
       >
         dahil gusto ka namin marinig
