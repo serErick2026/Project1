@@ -11,6 +11,14 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-cursive: var(--font-cursive);
+  --color-moss-50: #f4f6ec;
+  --color-moss-100: #e4e8d3;
+  --color-moss-200: #ccd5ac;
+  --color-moss-500: #8a9a5b;
+  --color-moss-600: #6b7f45;
+  --color-moss-700: #56663a;
+  --color-moss-800: #434f2e;
+  --color-moss-900: #374024;
 }
 
 @media (prefers-color-scheme: dark) {

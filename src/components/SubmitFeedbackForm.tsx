@@ -9,7 +9,7 @@ const RESEND_SECONDS = 60;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const inputClass =
-  "mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none";
+  "mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-moss-800 placeholder:text-moss-500 focus:border-moss-500 focus:outline-none";
 
 export function SubmitFeedbackForm() {
   const [state, action, pending] = useActionState<ActionResult | null, FormData>(
@@ -42,20 +42,20 @@ export function SubmitFeedbackForm() {
 
   if (state?.success) {
     return (
-      <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6 text-center">
+      <div className="rounded-2xl border border-moss-200 bg-moss-50 p-6 text-center">
         <p className="text-3xl" aria-hidden="true">
           ✓
         </p>
-        <h2 className="mt-2 text-lg font-semibold text-emerald-900">Feedback submitted!</h2>
-        <p className="mt-1 text-sm text-emerald-800">
+        <h2 className="mt-2 text-lg font-semibold text-moss-900">Feedback submitted!</h2>
+        <p className="mt-1 text-sm text-moss-800">
           Save your ticket number to track its status:
         </p>
-        <p className="mt-3 text-2xl font-bold tracking-widest text-emerald-900">
+        <p className="mt-3 text-2xl font-bold tracking-widest text-moss-900">
           {state.ticketNumber}
         </p>
         <Link
           href={`/track/${state.ticketNumber}`}
-          className="mt-4 inline-block rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+          className="mt-4 inline-block rounded-lg bg-moss-600 px-4 py-2 text-sm font-semibold text-white hover:bg-moss-700"
         >
           Track this ticket
         </Link>
@@ -67,8 +67,10 @@ export function SubmitFeedbackForm() {
             setOtpVerified(false);
             setOtpMessage(null);
             setResendIn(0);
+            const index = Math.floor(Math.random() * CHALLENGE_QUESTIONS.length);
+            setChallenge({ index, question: CHALLENGE_QUESTIONS[index].question });
           }}
-          className="mt-2 block w-full text-sm text-emerald-700 hover:underline"
+          className="mt-2 block w-full text-sm text-moss-700 hover:underline"
         >
           Submit another
         </button>
@@ -119,8 +121,8 @@ export function SubmitFeedbackForm() {
   return (
     <form ref={formRef} action={action} className="space-y-4">
       <div>
-        <label htmlFor="fullname" className="block text-sm font-medium">
-          Full name <span className="text-gray-400">(Optional)</span>
+        <label htmlFor="fullname" className="block text-sm font-medium text-moss-700">
+          Full name <span className="text-moss-500">(Optional)</span>
         </label>
         <input
           id="fullname"
@@ -133,8 +135,8 @@ export function SubmitFeedbackForm() {
       </div>
 
       <div>
-        <label htmlFor="cellphone" className="block text-sm font-medium">
-          Cellphone number <span className="text-gray-400">(Optional)</span>
+        <label htmlFor="cellphone" className="block text-sm font-medium text-moss-700">
+          Cellphone number <span className="text-moss-500">(Optional)</span>
         </label>
         <input
           id="cellphone"
@@ -147,8 +149,8 @@ export function SubmitFeedbackForm() {
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium">
-          Email address <span className="text-gray-400">(for verification)</span>
+        <label htmlFor="email" className="block text-sm font-medium text-moss-700">
+          Email address <span className="text-moss-500">(for verification)</span>
         </label>
         <div className="mt-1 flex gap-2">
           <input
@@ -160,13 +162,13 @@ export function SubmitFeedbackForm() {
             value={email}
             onChange={(e) => handleEmailChange(e.target.value)}
             placeholder="you@example.com"
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-moss-800 placeholder:text-moss-500 focus:border-moss-500 focus:outline-none"
           />
           <button
             type="button"
             onClick={handleSendCode}
             disabled={sending || resendIn > 0 || otpVerified}
-            className="shrink-0 rounded-lg border border-gray-300 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50 disabled:opacity-50"
+            className="shrink-0 rounded-lg border border-gray-300 px-3 py-2 text-sm font-semibold text-moss-700 hover:bg-moss-50 disabled:opacity-50"
           >
             {sending ? "Sending..." : resendIn > 0 ? `Resend in ${resendIn}s` : otpVerified ? "Verified" : "Send code"}
           </button>
@@ -174,7 +176,7 @@ export function SubmitFeedbackForm() {
       </div>
 
       <div>
-        <label htmlFor="otp" className="block text-sm font-medium">
+        <label htmlFor="otp" className="block text-sm font-medium text-moss-700">
           OTP code
         </label>
         <div className="mt-1 flex gap-2">
@@ -192,20 +194,20 @@ export function SubmitFeedbackForm() {
             }}
             disabled={otpVerified}
             placeholder="6-digit code"
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none disabled:bg-gray-50"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-moss-800 placeholder:text-moss-500 focus:border-moss-500 focus:outline-none disabled:bg-moss-50"
           />
           <button
             type="button"
             onClick={handleVerify}
             disabled={verifying || otpVerified || !otpCode}
-            className="shrink-0 rounded-lg bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-50"
+            className="shrink-0 rounded-lg bg-moss-600 px-3 py-2 text-sm font-semibold text-white hover:bg-moss-700 disabled:opacity-50"
           >
             {verifying ? "Checking..." : otpVerified ? "Verified" : "Verify"}
           </button>
         </div>
         {otpMessage && (
           <p
-            className={`mt-1 text-xs ${otpMessage.ok ? "text-emerald-600" : "text-red-600"}`}
+            className={`mt-1 text-xs ${otpMessage.ok ? "text-moss-600" : "text-red-600"}`}
             role="status"
           >
             {otpMessage.text}
@@ -214,8 +216,8 @@ export function SubmitFeedbackForm() {
       </div>
 
       <div>
-        <label htmlFor="district" className="block text-sm font-medium">
-          District <span className="text-gray-400">(Optional)</span>
+        <label htmlFor="district" className="block text-sm font-medium text-moss-700">
+          District <span className="text-moss-500">(Optional)</span>
         </label>
         <input
           id="district"
@@ -228,7 +230,7 @@ export function SubmitFeedbackForm() {
       </div>
 
       <div>
-        <label htmlFor="schoolOffice" className="block text-sm font-medium">
+        <label htmlFor="schoolOffice" className="block text-sm font-medium text-moss-700">
           Name of School/Office this concern is about
         </label>
         <input
@@ -243,7 +245,7 @@ export function SubmitFeedbackForm() {
       </div>
 
       <div>
-        <label htmlFor="nature" className="block text-sm font-medium">
+        <label htmlFor="nature" className="block text-sm font-medium text-moss-700">
           Nature of Request
         </label>
         <select
@@ -262,7 +264,7 @@ export function SubmitFeedbackForm() {
       </div>
 
       <div>
-        <label htmlFor="description" className="block text-sm font-medium">
+        <label htmlFor="description" className="block text-sm font-medium text-moss-700">
           Description and details
         </label>
         <textarea
@@ -276,11 +278,11 @@ export function SubmitFeedbackForm() {
         />
       </div>
 
-      <div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
-        <label htmlFor="challengeAnswer" className="block text-sm font-medium">
+      <div className="rounded-lg border border-moss-200 bg-moss-50 p-3">
+        <label htmlFor="challengeAnswer" className="block text-sm font-medium text-moss-700">
           Human verification
         </label>
-        <p className="mt-1 text-sm text-gray-700">{challenge.question}</p>
+        <p className="mt-1 text-sm text-moss-700">{challenge.question}</p>
         <input type="hidden" name="challengeIndex" value={challenge.index} />
         <input
           id="challengeAnswer"
@@ -289,7 +291,7 @@ export function SubmitFeedbackForm() {
           required
           autoComplete="off"
           placeholder="Your answer"
-          className="mt-2 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none"
+          className="mt-2 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-moss-800 placeholder:text-moss-500 focus:border-moss-500 focus:outline-none"
         />
       </div>
 
@@ -303,12 +305,12 @@ export function SubmitFeedbackForm() {
         <button
           type="submit"
           disabled={pending || !otpVerified}
-          className="w-full rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-50"
+          className="w-full rounded-lg bg-moss-600 px-4 py-2 text-sm font-semibold text-white hover:bg-moss-700 disabled:opacity-50"
         >
           {pending ? "Submitting..." : "Submit feedback"}
         </button>
         {!otpVerified && (
-          <p className="mt-2 text-center text-xs text-gray-500">
+          <p className="mt-2 text-center text-xs text-moss-600">
             Enter the OTP sent to your email to enable submission.
           </p>
         )}
