@@ -1,12 +1,17 @@
-const RESEND_API_KEY = process.env.RESEND_API_KEY ?? "";
-const FROM_EMAIL =
-  process.env.FROM_EMAIL ?? "Feedback Platform <onboarding@resend.dev>";
+import nodemailer from "nodemailer";
+
+const SMTP_HOST = process.env.SMTP_HOST ?? "mail.smtp2go.com";
+const SMTP_PORT = Number(process.env.SMTP_PORT ?? 2525);
+const SMTP_SECURE = process.env.SMTP_SECURE === "true";
+const SMTP_USER = process.env.SMTP_USER ?? "";
+const SMTP_PASS = process.env.SMTP_PASS ?? "";
+const SMTP_FROM = process.env.SMTP_FROM ?? "";
 
 export async function sendOtpEmail(
   to: string,
   code: string
 ): Promise<{ ok: true } | { ok: false; error: string }> {
-  if (!RESEND_API_KEY) {
+  if (!SMTP_USER || !SMTP_PASS) {
     console.log(`[dev] OTP for ${to}: ${code}`);
     return { ok: true };
   }
@@ -21,25 +26,25 @@ export async function sendOtpEmail(
   `;
 
   try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
+    const transporter = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: SMTP_PORT,
+      secure: SMTP_SECURE,
+      auth: {
+        user: SMTP_USER,
+        pass: SMTP_PASS,
       },
-      body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: [to],
-        subject: "Your verification code",
-        html,
-      }),
     });
 
-    if (!res.ok) {
-      return { ok: false, error: "Could not send the code. Please try again." };
-    }
+    await transporter.sendMail({
+      from: SMTP_FROM || SMTP_USER,
+      to,
+      subject: "Your verification code",
+      html,
+    });
     return { ok: true };
-  } catch {
+  } catch (err) {
+    console.error("Email send failed:", err);
     return { ok: false, error: "Could not send the code. Please try again." };
   }
 }
