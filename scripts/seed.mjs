@@ -7,7 +7,7 @@ async function main() {
   const db = mongoose.connection;
   console.log("Connected to MongoDB.");
 
-  for (const collection of ["feedbacks", "comments", "votes", "admins"]) {
+  for (const collection of ["feedbacks", "comments", "votes", "admins", "otps"]) {
     await db.dropCollection(collection).catch(() => {});
   }
 
@@ -16,43 +16,59 @@ async function main() {
   const sample = [
     {
       ticketNumber: "FB-DEMO01",
-      title: "Add dark mode to the dashboard",
+      fullname: "Juan Dela Cruz",
+      email: "demo@example.com",
+      emailVerified: true,
+      schoolOffice: "Mabini Elementary School",
+      district: "Quezon City District II",
+      nature: "suggestion",
       description:
-        "The dashboard is bright at night. A dark theme would make long review sessions much easier on the eyes.",
-      category: "feature",
+        "It would help if weekly updates about school activities were posted earlier, so parents can plan ahead.",
       status: "in-progress",
       createdAt: new Date(now - 5 * day),
       updatedAt: new Date(now - 2 * day),
     },
     {
       ticketNumber: "FB-DEMO02",
-      title: "Email notification when my ticket changes status",
+      fullname: "Maria Santos",
+      cellphone: "0917 000 0000",
+      email: "demo2@example.com",
+      emailVerified: true,
+      schoolOffice: "Bagong Silang National High School",
+      district: "Caloocan North",
+      nature: "complaint",
       description:
-        "It would be great to get an email when my submitted feedback moves to planned or done, so I don't have to keep checking.",
-      category: "feature",
-      status: "planned",
+        "The hallway lights near the Science building are not working, which makes it hard for students to move around in the morning.",
+      status: "open",
       createdAt: new Date(now - 3 * day),
-      updatedAt: new Date(now - 1 * day),
+      updatedAt: new Date(now - 3 * day),
     },
     {
       ticketNumber: "FB-DEMO03",
-      title: "Search and filter controls are hard to find",
+      email: "demo3@example.com",
+      emailVerified: true,
+      schoolOffice: "DepEd Schools Division Office",
+      district: "Manila",
+      nature: "praise",
       description:
-        "I didn't realize I could filter the board by category and status. The controls could be more prominent, or pinned to the top.",
-      category: "bug",
-      status: "open",
-      createdAt: new Date(now - 1 * day),
-      updatedAt: new Date(now - 1 * day),
-    },
-    {
-      ticketNumber: "FB-DEMO04",
-      title: "Thanks for making this easy",
-      description:
-        "Love that I can submit feedback without creating an account and track it with a simple ticket number.",
-      category: "general",
+        "The registration line moved quickly during the last enrollment period. Great job to the staff who handled it.",
       status: "done",
       createdAt: new Date(now - 8 * day),
       updatedAt: new Date(now - 4 * day),
+    },
+    {
+      ticketNumber: "FB-DEMO04",
+      fullname: "Pedro Reyes",
+      email: "demo4@example.com",
+      emailVerified: true,
+      schoolOffice: "San Isidro Integrated School",
+      district: "Laguna",
+      nature: "suggestion",
+      description:
+        "Consider adding more drinking fountains near the covered court for students during recess.",
+      status: "planned",
+      createdAt: new Date(now - 1 * day),
+      updatedAt: new Date(now - 1 * day),
     },
   ];
 

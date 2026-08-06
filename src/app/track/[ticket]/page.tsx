@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { withConnection } from "@/lib/db";
 import { Feedback } from "@/lib/models";
 import { StatusBadge } from "@/components/StatusBadge";
-import { CategoryBadge } from "@/components/CategoryBadge";
+import { NatureBadge } from "@/components/NatureBadge";
 
 export async function generateMetadata({ params }: PageProps<"/track/[ticket]">): Promise<Metadata> {
   const { ticket } = await params;
@@ -23,9 +23,7 @@ export default async function TicketPage({ params }: PageProps<"/track/[ticket]"
   const { ticket } = await params;
   const ticketNumber = ticket.trim().toUpperCase();
 
-  const feedback = await withConnection(async () =>
-    Feedback.findOne({ ticketNumber })
-  );
+  const feedback = await withConnection(async () => Feedback.findOne({ ticketNumber }));
   if (!feedback) notFound();
 
   return (
@@ -39,13 +37,19 @@ export default async function TicketPage({ params }: PageProps<"/track/[ticket]"
           {feedback.ticketNumber}
         </span>
         <StatusBadge status={feedback.status} />
-        <CategoryBadge category={feedback.category} />
+        <NatureBadge nature={feedback.nature} />
       </div>
 
-      <h1 className="mt-4 text-2xl font-bold text-gray-900">{feedback.title}</h1>
+      <h1 className="mt-4 text-2xl font-bold text-gray-900">
+        {feedback.schoolOffice || "Feedback"}
+      </h1>
       <p className="mt-1 text-xs text-gray-600">
         Submitted on {formatDate(feedback.createdAt)}
+        {feedback.fullname ? ` by ${feedback.fullname}` : ""}
       </p>
+      {feedback.district && (
+        <p className="mt-1 text-xs text-gray-600">District: {feedback.district}</p>
+      )}
 
       <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
         <p className="whitespace-pre-wrap text-gray-700">{feedback.description}</p>
